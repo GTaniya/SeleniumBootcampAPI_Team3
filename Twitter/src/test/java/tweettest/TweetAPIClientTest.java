@@ -106,7 +106,7 @@ public class TweetAPIClientTest {
     //Test #8
     @Test
     public void testGetAccountSettings(){
-        String expectedSetting = "";
+        String expectedSetting = "TaniyaGawri";
         ValidatableResponse response = this.tweetAPIClient.getAccountSettings();
         System.out.println(response.extract().body().asPrettyString());
         String actualSetting = response.extract().body().path("screen_name");
@@ -116,7 +116,7 @@ public class TweetAPIClientTest {
     //Test #9
     @Test
     public void testPostAccountSettings(){
-        String expectedSetting = "";
+        String expectedSetting = "TaniyaGawri";
         ValidatableResponse response = this.tweetAPIClient.postAccountSettings();
         System.out.println(response.extract().body().asPrettyString());
         String actualSetting = response.extract().body().path("screen_name");
