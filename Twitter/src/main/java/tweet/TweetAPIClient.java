@@ -26,6 +26,9 @@ public class TweetAPIClient extends RestAPI {
     private final String POST_UPDATE_PP_ENDPOINT = "/account/update_profile_image.json";
     private final String GET_SEARCH_TWEET = "/search/tweets.json";
     private final String GET_FOLLOWERS_ID = "/followers/ids.json";
+    private final String GET_FRIENDS_ID = "/friends/ids.json";
+    private final String GET_FOLLOWERS_LIST = "/followers/list.json";
+    private final String GET_TREND_AVAILABLE = "/trends/available.json";
     private final String POST_DIRECT_MESSAGES = "/direct_messages/events/new.json";
     public final String directMsgWithPath = "../Twitter/jsonFiles/jsonMessageWithImage.json";
 
@@ -102,11 +105,6 @@ public class TweetAPIClient extends RestAPI {
                 .when().post(this.baseUrl + this.POST_ACCOUNT_SETTINGS).then();
     }
 
-    public ValidatableResponse getFriendList() {
-        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
-                .when().get(this.baseUrl + this.GET_FRIEND_LIST).then();
-
-    }
 
     public ValidatableResponse postDirectMessage(String type, String receipt_id, String message_data) {
         return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
@@ -115,7 +113,7 @@ public class TweetAPIClient extends RestAPI {
                 .header("message_create.message_data", message_data)
                 .when().post(this.baseUrl + this.POST_DIRECT_MESSAGE).then();
     }
-    //upload profile pic
+
     public ValidatableResponse uploadProfilePicture(String ppimage){
         return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
                 .param("image", ppimage)
@@ -132,7 +130,7 @@ public class TweetAPIClient extends RestAPI {
                 .then();
     }
 
-    //direct message w/ pic attached
+
     public ValidatableResponse messageCreateWithPicture() throws FileNotFoundException {
         FileInputStream jsonMessage = new FileInputStream(directMsgWithPath);
         return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
@@ -152,6 +150,33 @@ public class TweetAPIClient extends RestAPI {
         return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
                 .queryParam("user_id",id)
                 .when().get(this.baseUrl + this.GET_FOLLOWERS_ID).then().statusCode(200);
+    }
+
+    public ValidatableResponse getFriendList(long id) {
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .queryParam("user_id",id)
+                .when().get(this.baseUrl + this.GET_FRIEND_LIST).then();
+
+    }
+
+    public ValidatableResponse getFriendID(long id) {
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .queryParam("user_id",id)
+                .when().get(this.baseUrl + this.GET_FRIENDS_ID).then();
+
+    }
+
+    public ValidatableResponse getFollowersList(long id) {
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .queryParam("user_id",id)
+                .when().get(this.baseUrl + this.GET_FOLLOWERS_LIST).then();
+
+    }
+
+    public ValidatableResponse getTrentAvailable() {
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .when().get(this.baseUrl + this.GET_TREND_AVAILABLE).then();
+
     }
 
 }
