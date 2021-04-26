@@ -15,9 +15,11 @@ public class RestAPI {
     protected InputStream inputStream;
     protected String baseUrl;
     protected String apiVersion="1.1";
+    protected String uploadImageBase;
 
     public RestAPI() {
         //https://api.twitter.com/1.1/statuses/update.json
+        this.uploadImageBase = "https://upload.twitter.com/1.1";
         this.baseUrl = "https://api.twitter.com/"+this.apiVersion;
         this.properties = new Properties();
         inputStream = null;

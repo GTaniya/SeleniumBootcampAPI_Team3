@@ -1,0 +1,13 @@
+{
+  "event": {
+    "type": "message_create",
+    "message_create": {
+      "target": {
+        "recipient_id": "1375997679377977346"
+      },
+      "message_data": {
+        "text": "Hello Pritam:)"
+      }
+    }
+  }
+}

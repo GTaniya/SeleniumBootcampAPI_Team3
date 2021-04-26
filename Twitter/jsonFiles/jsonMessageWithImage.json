@@ -1,0 +1,19 @@
+{
+  "event": {
+    "type": "message_create",
+    "message_create": {
+      "target": {
+        "recipient_id": "1375997679377977346"
+      },
+      "message_data": {
+        "text": "Hi Pritam, Thank you for teaching API",
+        "attachment": {
+          "type": "media",
+          "media": {
+            "id": "1386494531592364032"
+          }
+        }
+      }
+    }
+  }
+}
