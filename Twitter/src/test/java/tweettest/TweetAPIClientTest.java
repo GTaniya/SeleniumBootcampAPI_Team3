@@ -200,5 +200,6 @@ public class TweetAPIClientTest {
         long actualID = response.extract().body().path("ids[0].");
         Assert.assertEquals(actualID,expectedID);
     }
+
 }
 
