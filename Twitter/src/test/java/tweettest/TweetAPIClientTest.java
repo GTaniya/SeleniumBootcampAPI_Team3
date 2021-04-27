@@ -37,11 +37,8 @@ public class TweetAPIClientTest {
     //Test #2
     @Test
     public void testUserCanNotDuplicateTweet() {
-
         String tweet = "wherever life plants you bloom with grace";
         ValidatableResponse response = this.tweetAPIClient.createTweet(tweet);
-
-       // response.statusCode(403);
 
         System.out.println(response.extract().body().asPrettyString());
         String expectedMessage="Status is a duplicate.";
@@ -273,7 +270,7 @@ public class TweetAPIClientTest {
     @Test
     public void testGeoLocation()  {
        // String expectedText = "Spanish";
-        ValidatableResponse response = this.tweetAPIClient.getGeoLocation("40.0160921, -105.2812196");
+        ValidatableResponse response = this.tweetAPIClient.getGeoLocation("5a110d312052166f");
         System.out.println(response.extract().body().asPrettyString());
 //        String actualText = response.extract().body().path("[7].name");
 //        Assert.assertEquals(actualText,expectedText,"User Not Found");
@@ -281,10 +278,10 @@ public class TweetAPIClientTest {
 
     @Test
     public void testTrendLocation()  {
-        String expectedText = "http://twitter.com/search?q=%23PINKMOON";
+        String expectedText = "Tucker Carlson";
         ValidatableResponse response = this.tweetAPIClient.getTrendPlace(23424977);
         System.out.println(response.extract().body().asPrettyString());
-        String actualText = response.extract().body().path("trends[0].url");
+        String actualText = response.extract().body().path("[0].trends[0].name");
         Assert.assertEquals(actualText,expectedText,"User Not Found");
     }
 }
