@@ -25,11 +25,10 @@ public class TweetAPIClientTest {
 
     //Test #1
     @Test
-    public void testUserCanTweetSuccessfully() {
-        // User sent a tweet tweet
+    public void testUserCanPostTweet() {
+
         String tweet = "Wherever life plants you bloom with grace"+ UUID.randomUUID().toString();
         ValidatableResponse response = this.tweetAPIClient.createTweet(tweet);
-       // response.statusCode(200);
         String actualTweet=response.extract().body().path("text");
         Assert.assertEquals(actualTweet,tweet,"Tweet is not match");
     }
@@ -37,7 +36,7 @@ public class TweetAPIClientTest {
 
     //Test #2
     @Test
-    public void testUserCanNotTweetTheSameTweetTwiceInARow() {
+    public void testUserCanNotDuplicateTweet() {
 
         String tweet = "wherever life plants you bloom with grace";
         ValidatableResponse response = this.tweetAPIClient.createTweet(tweet);
@@ -79,7 +78,7 @@ public class TweetAPIClientTest {
     //Test #5
     @Test(enabled = false)
     public void testPropertyFromResponse() {
-        //1. User send a tweet
+
         String tweet = "Hello Tweeter" + UUID.randomUUID().toString();
         ValidatableResponse response = this.tweetAPIClient.createTweet(tweet);
         System.out.println(response.extract().body().asPrettyString());
@@ -131,10 +130,9 @@ public class TweetAPIClientTest {
     //Test #10
     @Test
     public void testTweet() {
-        // User sent a tweet tweet
+
         String tweet = "Hello World"+ UUID.randomUUID().toString();
         ValidatableResponse response = this.tweetAPIClient.createTweet(tweet);
-        // response.statusCode(200);
         String actualTweet=response.extract().body().path("text");
         Assert.assertEquals(actualTweet,tweet,"Tweet is not match");
     }
@@ -173,12 +171,12 @@ public class TweetAPIClientTest {
         System.out.println(response.extract().body().asPrettyString());
     }
 
-//    @Test
-//    public void testUserCanSendDirectMsgWithPicture() throws FileNotFoundException {
-//        ValidatableResponse response = this.tweetAPIClient.messageCreateWithPicture();
+    @Test
+    public void testUserCanSendDirectMsgWithPicture() throws FileNotFoundException {
+        ValidatableResponse response = this.tweetAPIClient.messageCreateWithPicture();
 //        response.statusCode(200);
-//        System.out.println(response.extract().body().asPrettyString());
-//    }
+        System.out.println(response.extract().body().asPrettyString());
+    }
 
     //Test #15
     @Test
@@ -239,6 +237,55 @@ public class TweetAPIClientTest {
         System.out.println(response.extract().body().asPrettyString());
         String actualText = response.extract().body().path("[0].name");
         Assert.assertEquals(actualText,expectedText,"Follower Not Found");
+    }
+
+    //Test #21
+    @Test
+    public void testUsersSearch()  {
+        String expectedText = "Robert Pattinson WorldWide";
+        ValidatableResponse response = this.tweetAPIClient.getUsersSearch("Robert Pattinson");
+        System.out.println(response.extract().body().asPrettyString());
+        String actualText = response.extract().body().path("[0].name");
+        Assert.assertEquals(actualText,expectedText,"User Not Found");
+    }
+
+    //Test #22
+    @Test
+    public void testFavoriteList()  {
+         String expectedText = "@PrimeVideo https://t.co/w3n7dd3F3B";
+         ValidatableResponse response = this.tweetAPIClient.getFavoriteList(1385051480491712526L);
+         System.out.println(response.extract().body().asPrettyString());
+        String actualText = response.extract().body().path("[0].text");
+        Assert.assertEquals(actualText,expectedText,"User Not Found");
+    }
+
+    @Test
+    public void testHelpLanguages()  {
+        String expectedText = "Spanish";
+        ValidatableResponse response = this.tweetAPIClient.getHelpLanguage();
+        System.out.println(response.extract().body().asPrettyString());
+        String actualText = response.extract().body().path("[7].name");
+        Assert.assertEquals(actualText,expectedText,"User Not Found");
+    }
+
+
+
+    @Test
+    public void testGeoLocation()  {
+       // String expectedText = "Spanish";
+        ValidatableResponse response = this.tweetAPIClient.getGeoLocation("40.0160921, -105.2812196");
+        System.out.println(response.extract().body().asPrettyString());
+//        String actualText = response.extract().body().path("[7].name");
+//        Assert.assertEquals(actualText,expectedText,"User Not Found");
+    }
+
+    @Test
+    public void testTrendLocation()  {
+        String expectedText = "http://twitter.com/search?q=%23PINKMOON";
+        ValidatableResponse response = this.tweetAPIClient.getTrendPlace(23424977);
+        System.out.println(response.extract().body().asPrettyString());
+        String actualText = response.extract().body().path("trends[0].url");
+        Assert.assertEquals(actualText,expectedText,"User Not Found");
     }
 }
 

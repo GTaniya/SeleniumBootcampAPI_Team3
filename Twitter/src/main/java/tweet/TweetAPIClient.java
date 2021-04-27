@@ -29,6 +29,11 @@ public class TweetAPIClient extends RestAPI {
     private final String GET_FRIENDS_ID = "/friends/ids.json";
     private final String GET_FOLLOWERS_LIST = "/followers/list.json";
     private final String GET_TREND_AVAILABLE = "/trends/available.json";
+    private final String GET_USERS_SEARCH = "/users/search.json";
+    private final String GET_FAVORITE_LISTS = "/favorites/list.json";
+    private final String GET_HELP_LANGUAGES = "/help/languages.json";
+    private final String GET_GEO_LOCATION_ID = "/geo/id/:place_id.json";
+    private final String GET_TREND_PLACE = "/trends/place.json";
     private final String POST_DIRECT_MESSAGES = "/direct_messages/events/new.json";
     public final String directMsgWithPath = "../Twitter/jsonFiles/jsonMessageWithImage.json";
 
@@ -179,4 +184,34 @@ public class TweetAPIClient extends RestAPI {
 
     }
 
+    public ValidatableResponse getUsersSearch(String id){
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .queryParam("q",id)
+                .when().get(this.baseUrl + this.GET_USERS_SEARCH).then();
+    }
+
+    public ValidatableResponse getFavoriteList(long id){
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .queryParam("user_id",id)
+                .when().get(this.baseUrl + this.GET_FAVORITE_LISTS).then();
+    }
+
+    public ValidatableResponse getHelpLanguage() {
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .when().get(this.baseUrl + this.GET_HELP_LANGUAGES).then();
+
+    }
+
+
+    public ValidatableResponse getGeoLocation(String id){
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .queryParam("place_id",id)
+                .when().get(this.baseUrl + this.GET_GEO_LOCATION_ID).then();
+    }
+
+    public ValidatableResponse getTrendPlace(int id){
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .queryParam("id",id)
+                .when().get(this.baseUrl + this.GET_TREND_PLACE).then();
+    }
 }
