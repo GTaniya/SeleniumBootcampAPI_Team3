@@ -256,6 +256,7 @@ public class TweetAPIClientTest {
         Assert.assertEquals(actualText,expectedText,"User Not Found");
     }
 
+    //Test #23
     @Test
     public void testHelpLanguages()  {
         String expectedText = "Spanish";
@@ -269,13 +270,12 @@ public class TweetAPIClientTest {
 
     @Test
     public void testGeoLocation()  {
-       // String expectedText = "Spanish";
+
         ValidatableResponse response = this.tweetAPIClient.getGeoLocation("5a110d312052166f");
         System.out.println(response.extract().body().asPrettyString());
-//        String actualText = response.extract().body().path("[7].name");
-//        Assert.assertEquals(actualText,expectedText,"User Not Found");
     }
 
+    //Test #24
     @Test
     public void testTrendLocation()  {
         String expectedText = "Tucker Carlson";
