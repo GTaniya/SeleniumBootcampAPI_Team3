@@ -35,7 +35,7 @@ public class TweetAPIClientTest {
     @Test
     public void testUserCanNotTweetTheSameTweetTwiceInARow() {
         // User sent a tweet
-        String tweet = "4 days until survival";
+        String tweet = "Hello Tweeter";
         ValidatableResponse response = this.tweetAPIClient.createTweet(tweet);
         // Verify that the tweet is successful
        response.statusCode(403);
@@ -50,8 +50,8 @@ public class TweetAPIClientTest {
     //Test #3
     @Test
     public void testDeleteTweet(){
-        String tweet="We are learning Rest API using Rest Assured and our First Tweet82d120dd-9045-44f3-a3c9-8720409fae20";
-        ValidatableResponse deleteResponse= this.tweetAPIClient.deleteTweet(1378590700409921541L);
+        String tweet="Hello Tweeter";
+        ValidatableResponse deleteResponse= this.tweetAPIClient.deleteTweet(1386555910345170946l);
         deleteResponse.statusCode(200);
         String actualTweet= deleteResponse.extract().body().path("text");
         Assert.assertEquals(tweet,actualTweet);
@@ -106,7 +106,7 @@ public class TweetAPIClientTest {
     //Test #8
     @Test
     public void testGetAccountSettings(){
-        String expectedSetting = "";
+        String expectedSetting = "azadeh50868277";
         ValidatableResponse response = this.tweetAPIClient.getAccountSettings();
         System.out.println(response.extract().body().asPrettyString());
         String actualSetting = response.extract().body().path("screen_name");
@@ -116,12 +116,130 @@ public class TweetAPIClientTest {
     //Test #9
     @Test
     public void testPostAccountSettings(){
-        String expectedSetting = "";
+        String expectedSetting = "azadeh50868277";
         ValidatableResponse response = this.tweetAPIClient.postAccountSettings();
         System.out.println(response.extract().body().asPrettyString());
         String actualSetting = response.extract().body().path("screen_name");
         Assert.assertEquals(actualSetting,expectedSetting,"Setting Not Found");
     }
+    //Test #10
+    @Test
+    public void testGetSearchTweet(){
+        String expectedText = "#pitabread #galoti #kabab #uttapam #momos!! @TwitterFood @NDTVFood @food https://t.co/lN6brxi0ct";
+        ValidatableResponse response = this.tweetAPIClient.getStatusTweets("@food");
+        System.out.println(response.extract().body().asPrettyString());
+        String actualText = response.extract().body().path("statuses[0].text");
+        Assert.assertEquals(actualText,expectedText);
+    }
+    //Test #11
+    @Test
+    public void testGetFriendList() {
+        String expectedText = "Gawri Taniya";
+        ValidatableResponse response = this.tweetAPIClient.getFriendList(1385051480491712526l);
+        System.out.println(response.extract().body().asPrettyString());
+        String actualText = response.extract().body().path("users[0].name");
+        Assert.assertEquals(actualText, expectedText);
+    }
+   // Test #12
+    @Test
+    public void testGetFriendId() {
+        long expectedId = 702779075094519808l;
+        ValidatableResponse response = this.tweetAPIClient.getFriendId(1385051480491712526l);
+        System.out.println(response.extract().body().asPrettyString());
+        long actualId = response.extract().body().path("ids[0].");
+        Assert.assertEquals(actualId, expectedId);
+    }
+    // Test #13
+    @Test
+    public void testGetTrendAvailable() {
+        String expectedText = "Winnipeg";
+        ValidatableResponse response = this.tweetAPIClient.getTrendAvailable();
+        System.out.println(response.extract().body().asPrettyString());
+        String actualText = response.extract().body().path("[1].name");
+        Assert.assertEquals(actualText, expectedText);
+    }
+    // Test #14
+    @Test
+    public void testGetUserSearch() {
+        String expectedText = "Mike Pompeo";
+        ValidatableResponse response = this.tweetAPIClient.getUserSearch("Mike Pompeo");
+        System.out.println(response.extract().body().asPrettyString());
+        String actualText = response.extract().body().path("[0].name");
+        Assert.assertEquals(actualText, expectedText);
+    }
+    //Test #15
+    @Test
+    public void testUserCanTweet() {
+        String tweet = "I am practicing API"+ UUID.randomUUID().toString();
+        ValidatableResponse response = this.tweetAPIClient.createTweet(tweet);
+        String actualTweet=response.extract().body().path("text");
+        Assert.assertEquals(actualTweet,tweet,"Tweet is not match");
+    }
+    //Test #16
+    @Test
+    public void testDeleteTweet2(){
+        String tweet="I am practicing APIa5909a1c-b54b-44e3-b61a-3756c7028b58";
+        ValidatableResponse deleteResponse= this.tweetAPIClient.deleteTweet(1386871987042230274l);
+        deleteResponse.statusCode(200);
+        String actualTweet= deleteResponse.extract().body().path("text");
+        Assert.assertEquals(tweet,actualTweet);
+
+    }
+    // Test #17
+    @Test
+    public void testGetFollowerList() {
+        String expectedText = "Q";
+        ValidatableResponse response = this.tweetAPIClient.getFollowerList(1385051480491712526l);
+        System.out.println(response.extract().body().asPrettyString());
+        String actualText = response.extract().body().path("users[1].name");
+        Assert.assertEquals(actualText, expectedText);
+
+
+    }
+    // Test #17
+    @Test
+    public void testGetFollower() {
+        String expectedText = "TaniyaGawri";
+        ValidatableResponse response = this.tweetAPIClient.getFollowerList(1385051480491712526l);
+        System.out.println(response.extract().body().asPrettyString());
+        String actualText = response.extract().body().path("users[0].screen_name");
+        Assert.assertEquals(actualText, expectedText);
+
+
+    }
+    // Test #18
+    @Test
+    public void testGetFollowerId() {
+       long expectedId= 702779075094519808l;
+        ValidatableResponse response = this.tweetAPIClient.getFollowerId(1385051480491712526l);
+        System.out.println(response.extract().body().asPrettyString());
+        long actualId = response.extract().body().path("ids[0].");
+        Assert.assertEquals(actualId,expectedId);
+
+
+    }
+    // Test #19
+    @Test
+    public void testGetFavoriteList() {
+        long expectedId= 1386712559148015616l;
+        ValidatableResponse response = this.tweetAPIClient.getFavoriteList(1385051480491712526l);
+        System.out.println(response.extract().body().asPrettyString());
+        long actualId = response.extract().body().path("id[0].");
+        Assert.assertEquals(actualId,expectedId);
+
+
+    }
+    // Test #20
+    @Test
+    public void testGetHelpLanguages() {
+       String expectedId= "Urdu";
+        ValidatableResponse response = this.tweetAPIClient.getHelpLanguages();
+        System.out.println(response.extract().body().asPrettyString());
+        String actualId = response.extract().body().path("[0].name");
+        Assert.assertEquals(actualId,expectedId);
+
+    }
+
 
 
 

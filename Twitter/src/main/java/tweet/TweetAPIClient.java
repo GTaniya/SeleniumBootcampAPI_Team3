@@ -19,6 +19,18 @@ public class TweetAPIClient extends RestAPI {
     private final String GET_TRENDS_PLACE = "/trends/place.json";
     private final String GET_ACCOUNT_SETTINGS = "/account/settings.json";
     private final String POST_ACCOUNT_SETTINGS = "/account/settings.json";
+    private final String GET_SEARCH_TWEET = "/search/tweets.json";
+    private final String GET_FRIENDS_LIST = "/friends/list.json";
+    private final String GET_FRIENDS_ID = "/friends/ids.json";
+    private final String GET_TREND_AVAILABLE = "/trends/available.json";
+    private final String GET_USER_SEARCH= "/users/search.json";
+    private final String GET_FOLLOWER_LIST = "/followers/list.json";
+    private final String GET_FOLLOWER_ID = "/followers/ids.json";
+    private final String GET_FAVORITE_LIST = "/favorites/list.json";
+    private final String GET_HELP_LANGUAGES = "/help/languages.json";
+
+
+
 
     ////////////////////////////////////-> Action Methods Below <-/////////////////////////////////////////
 
@@ -92,4 +104,52 @@ public class TweetAPIClient extends RestAPI {
         return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
                 .when().post(this.baseUrl + this.POST_ACCOUNT_SETTINGS).then();
     }
+    public ValidatableResponse getStatusTweets(String id){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .queryParam("q",id)
+                .when().get(this.baseUrl+this.GET_SEARCH_TWEET).then().statusCode(200);
+
+    }
+    public ValidatableResponse getFriendList(long id){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .queryParam("user_id",id)
+                .when().get(this.baseUrl+this.GET_FRIENDS_LIST).then().statusCode(200);
+    }
+    public ValidatableResponse getFriendId(long id){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .queryParam("user_id",id)
+                .when().get(this.baseUrl+this.GET_FRIENDS_ID).then().statusCode(200);
+    }
+    public ValidatableResponse getTrendAvailable (){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .when().get(this.baseUrl+this.GET_TREND_AVAILABLE).then().statusCode(200);
+    }
+    public ValidatableResponse getUserSearch(String id){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .queryParam("q",id)
+                .when().get(this.baseUrl+this.GET_USER_SEARCH).then();
+    }
+    public ValidatableResponse getFollowerList(long id){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .queryParam("user_id",id)
+                .when().get(this.baseUrl+this.GET_FOLLOWER_LIST).then();
+    }
+    public ValidatableResponse getFollowerId(long id){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .queryParam("user_id",id)
+                .when().get(this.baseUrl+this.GET_FOLLOWER_ID).then();
+    }
+
+    public ValidatableResponse getFavoriteList(long id){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .queryParam("user_id",id)
+                .when().get(this.baseUrl+this.GET_FAVORITE_LIST).then();
+    }
+
+    public ValidatableResponse getHelpLanguages(){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .when().get(this.baseUrl+this.GET_HELP_LANGUAGES).then();
+    }
+
+
 }
