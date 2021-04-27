@@ -23,6 +23,13 @@ public class TweetAPIClient extends RestAPI {
     private final String GET_FRIEND_IDS = "/friends/ids.json";
     private final String GET_SEARCH_TWEET = "/search/tweets.json";
     private final String GET_TRENDS_AVAILABLE = "/trends/available.json";
+    private final String GET_USERS_SEARCH = "/users/search.json";
+    private final String GET_USERS_SHOW = "/users/show.json";
+    private final String GET_USERS_LOOKUP = "/users/lookup.json";
+    private final String GET_TREND_PLACE = "/trends/place.json";
+    private final String GET_HELP_LANGUAGES = "/help/languages.json";
+    private final String GET_HOME_TIMELINE = "/statuses/home_timeline.json";
+    private final String GET_FAVORITES_LIST = "/favorites/list.json";
 
     ////////////////////////////////////-> Action Methods Below <-/////////////////////////////////////////
 
@@ -120,5 +127,43 @@ public class TweetAPIClient extends RestAPI {
                 .when().get(this.baseUrl + this.GET_TRENDS_AVAILABLE).then();
     }
 
+    public ValidatableResponse getUsersSearch(String id){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .queryParam("q", id)
+                .when().get(this.baseUrl + this.GET_USERS_SEARCH).then();
+    }
 
+    public ValidatableResponse getUsersShow(long id){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .queryParam("user_id", id)
+                .when().get(this.baseUrl + this.GET_USERS_SHOW).then();
+    }
+
+    public ValidatableResponse getUsersLookup(long id){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .queryParam("user_id", id)
+                .when().get(this.baseUrl + this.GET_USERS_LOOKUP).then();
+    }
+
+    public ValidatableResponse getTrendPlace(int id){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .queryParam("id", id)
+                .when().get(this.baseUrl + this.GET_TREND_PLACE).then();
+    }
+
+    public ValidatableResponse getHelpLanguage(){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .when().get(this.baseUrl + this.GET_HELP_LANGUAGES).then();
+    }
+
+    public ValidatableResponse getHomeTimeline(){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .when().get(this.baseUrl + this.GET_HOME_TIMELINE).then();
+    }
+
+    public ValidatableResponse getFavoritesList(long id){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .queryParam("user_id", id)
+                .when().get(this.baseUrl + this.GET_FAVORITES_LIST).then();
+    }
 }

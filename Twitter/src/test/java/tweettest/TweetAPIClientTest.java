@@ -159,9 +159,68 @@ public class TweetAPIClientTest {
         Assert.assertEquals(actualTweet,expectedTweet,"Tweet not found");
     }
 
+    @Test
+    public void testGetUsersSearch(){
+        String expectedTweet = "Wendy's";
+        ValidatableResponse response = this.tweetAPIClient.getUsersSearch("@Wendy's");
+        System.out.println(response.extract().body().asPrettyString());
+        String actualTweet = response.extract().body().path("[0].name");
+        Assert.assertEquals(actualTweet,expectedTweet,"User not found");
+    }
 
+    @Test
+    public void testGetUsersShow(){
+       String expectedTweet = "NintendoAmerica";
+        ValidatableResponse response = this.tweetAPIClient.getUsersShow(5162861L);
+        System.out.println(response.extract().body().asPrettyString());
+        String actualTweet = response.extract().body().path("screen_name");
+        Assert.assertEquals(actualTweet,expectedTweet,"User not found");
+    }
 
+    @Test
+    public void testGetUsersLookup(){
+        long expectedTweet = 702779075094519808L;
+        ValidatableResponse response = this.tweetAPIClient.getUsersLookup(702779075094519808L);
+        System.out.println(response.extract().body().asPrettyString());
+        long actualTweet = response.extract().body().path("[0].id");
+        Assert.assertEquals(actualTweet,expectedTweet,"User not found");
+    }
 
+    @Test
+    public void testGetTrendPLace(){
+        String expectedTweet = "#جامعه_زايد";
+        ValidatableResponse response = this.tweetAPIClient.getTrendPlace(1940330);
+        System.out.println(response.extract().body().asPrettyString());
+        String actualTweet = response.extract().body().path("[0].trends[0].name");
+        Assert.assertEquals(actualTweet,expectedTweet,"User not found");
+    }
+
+    @Test
+    public void testGetHelpLanguages(){
+        String expectedTweet = "French";
+        ValidatableResponse response = this.tweetAPIClient.getHelpLanguage();
+        System.out.println(response.extract().body().asPrettyString());
+        String actualTweet = response.extract().body().path("[9].name");
+        Assert.assertEquals(actualTweet,expectedTweet,"User not found");
+    }
+
+    @Test
+    public void testGetHomeTimeline(){
+      String expectedTweet = "A free demo for #Miitopia is available now on #NintendoSwitch #eShop! Download and begin your comedy-filled adventu… https://t.co/txpjcTzj5Q";
+        ValidatableResponse response = this.tweetAPIClient.getHomeTimeline();
+        System.out.println(response.extract().body().asPrettyString());
+        String actualTweet = response.extract().body().path("[0].text");
+        Assert.assertEquals(actualTweet,expectedTweet,"User not found");
+    }
+
+    @Test
+    public void testGetFavoriteList(){
+        String expectedTweet = "Wherever life plants you bloom with grace68327be3-1d81-48ba-918c-b10e6138d4e4";
+        ValidatableResponse response = this.tweetAPIClient.getFavoritesList(1386811544831463430L);
+        System.out.println(response.extract().body().asPrettyString());
+        String actualTweet = response.extract().body().path("[1].text");
+        Assert.assertEquals(actualTweet,expectedTweet,"User not found");
+    }
 
 
 }
