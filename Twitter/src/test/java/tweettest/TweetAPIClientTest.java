@@ -23,7 +23,7 @@ public class TweetAPIClientTest {
     @Test
     public void testUserCanTweetSuccessfully() {
         // User sent a tweet tweet
-        String tweet = "Hello Tweeter"+ UUID.randomUUID().toString();
+        String tweet = "Twitter is toxic"+ UUID.randomUUID().toString();
         ValidatableResponse response = this.tweetAPIClient.createTweet(tweet);
        // response.statusCode(200);
         String actualTweet=response.extract().body().path("text");
@@ -35,10 +35,10 @@ public class TweetAPIClientTest {
     @Test
     public void testUserCanNotTweetTheSameTweetTwiceInARow() {
         // User sent a tweet
-        String tweet = "4 days until survival";
+        String tweet = "Twitter is toxic";
         ValidatableResponse response = this.tweetAPIClient.createTweet(tweet);
         // Verify that the tweet is successful
-       response.statusCode(403);
+       //response.statusCode(403);
         // Verity Retweet
         System.out.println(response.extract().body().asPrettyString());
         String expectedMessage="Status is a duplicate.";
@@ -50,8 +50,8 @@ public class TweetAPIClientTest {
     //Test #3
     @Test
     public void testDeleteTweet(){
-        String tweet="We are learning Rest API using Rest Assured and our First Tweet82d120dd-9045-44f3-a3c9-8720409fae20";
-        ValidatableResponse deleteResponse= this.tweetAPIClient.deleteTweet(1378590700409921541L);
+        String tweet="Twitter is toxic486f9bf7-fbac-45f7-8acb-4d28e63119ad";
+        ValidatableResponse deleteResponse= this.tweetAPIClient.deleteTweet(1386816791188582404L);
         deleteResponse.statusCode(200);
         String actualTweet= deleteResponse.extract().body().path("text");
         Assert.assertEquals(tweet,actualTweet);
@@ -61,7 +61,7 @@ public class TweetAPIClientTest {
     //Test #4
     @Test(enabled = true)
     public void testResponseTime() {
-        String expectedResponse = "Sat Apr 24 02:10:35 +0000 2021";
+        String expectedResponse = "Mon Apr 26 22:58:18 +0000 2021";
         ValidatableResponse response = this.tweetAPIClient.responseTime();
         System.out.println(response.extract().body().asPrettyString());
         String actualResponse = response.extract().body().path("[0].created_at");
@@ -106,7 +106,7 @@ public class TweetAPIClientTest {
     //Test #8
     @Test
     public void testGetAccountSettings(){
-        String expectedSetting = "";
+        String expectedSetting = "Taylor06048619";
         ValidatableResponse response = this.tweetAPIClient.getAccountSettings();
         System.out.println(response.extract().body().asPrettyString());
         String actualSetting = response.extract().body().path("screen_name");
@@ -116,12 +116,51 @@ public class TweetAPIClientTest {
     //Test #9
     @Test
     public void testPostAccountSettings(){
-        String expectedSetting = "";
+        String expectedSetting = "Taylor06048619";
         ValidatableResponse response = this.tweetAPIClient.postAccountSettings();
         System.out.println(response.extract().body().asPrettyString());
         String actualSetting = response.extract().body().path("screen_name");
         Assert.assertEquals(actualSetting,expectedSetting,"Setting Not Found");
     }
+
+    @Test
+    public void testGetFriendsList(){
+       String expectedSetting = "Gawri Taniya";
+        ValidatableResponse response = this.tweetAPIClient.getFriendsList(1386811544831463430L);
+        System.out.println(response.extract().body().asPrettyString());
+        String actualSetting = response.extract().body().path("users[0].name");
+        Assert.assertEquals(actualSetting,expectedSetting,"Friend not found");
+    }
+
+    @Test
+    public void testGetFriendsIDS(){
+        long expectedId = 702779075094519808L;
+        ValidatableResponse response = this.tweetAPIClient.getFriendsIDS(1386811544831463430L);
+        System.out.println(response.extract().body().asPrettyString());
+        long actualId = response.extract().body().path("ids[0].");
+        Assert.assertEquals(actualId,expectedId,"ID not found");
+    }
+
+    @Test
+    public void testGetSearchTweet(){
+       String expectedTweet = "@MMCrypto Guys Im in SpaceX rocket flying to the Moon with @Elon Musk and @DavinciJ15 and I found somethin interesting on charts!!!!!!!!";
+        ValidatableResponse response = this.tweetAPIClient.getSearchTweet("@Elon Musk");
+        System.out.println(response.extract().body().asPrettyString());
+        String actualTweet = response.extract().body().path("statuses[0].text");
+        Assert.assertEquals(actualTweet,expectedTweet,"Tweet not found");
+    }
+
+    @Test
+    public void testGetTrendsAvailable(){
+        String expectedTweet = "Worldwide";
+        ValidatableResponse response = this.tweetAPIClient.getTrendsAvailable();
+        System.out.println(response.extract().body().asPrettyString());
+        String actualTweet = response.extract().body().path("[0].name");
+        Assert.assertEquals(actualTweet,expectedTweet,"Tweet not found");
+    }
+
+
+
 
 
 

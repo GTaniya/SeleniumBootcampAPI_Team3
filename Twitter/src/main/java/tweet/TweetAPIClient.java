@@ -19,6 +19,10 @@ public class TweetAPIClient extends RestAPI {
     private final String GET_TRENDS_PLACE = "/trends/place.json";
     private final String GET_ACCOUNT_SETTINGS = "/account/settings.json";
     private final String POST_ACCOUNT_SETTINGS = "/account/settings.json";
+    private final String GET_FRIEND_LIST = "/friends/list.json";
+    private final String GET_FRIEND_IDS = "/friends/ids.json";
+    private final String GET_SEARCH_TWEET = "/search/tweets.json";
+    private final String GET_TRENDS_AVAILABLE = "/trends/available.json";
 
     ////////////////////////////////////-> Action Methods Below <-/////////////////////////////////////////
 
@@ -92,4 +96,29 @@ public class TweetAPIClient extends RestAPI {
         return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
                 .when().post(this.baseUrl + this.POST_ACCOUNT_SETTINGS).then();
     }
+
+    public ValidatableResponse getFriendsList(long id){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .queryParam("user_id", id)
+                .when().get(this.baseUrl + this.GET_FRIEND_LIST).then();
+    }
+
+    public ValidatableResponse getFriendsIDS(long id){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .queryParam("user_id", id)
+                .when().get(this.baseUrl + this.GET_FRIEND_IDS).then();
+    }
+
+    public ValidatableResponse getSearchTweet(String id){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .queryParam("q", id)
+                .when().get(this.baseUrl + this.GET_SEARCH_TWEET).then();
+    }
+
+    public ValidatableResponse getTrendsAvailable(){
+        return given().auth().oauth(this.apiKey,this.apiSecretKey,this.accessToken,this.accessTokenSecret)
+                .when().get(this.baseUrl + this.GET_TRENDS_AVAILABLE).then();
+    }
+
+
 }
