@@ -39,13 +39,20 @@ public class TweetAPIClient extends RestAPI {
 
     ////////////////////////////////////-> Action Methods Below <-/////////////////////////////////////////
 
-    // GET all Tweet Information
-    public ValidatableResponse getUserTimeTweet() {
+    public ValidatableResponse getFriendList(long id) {
         return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
-                .when().get(this.baseUrl + this.GET_USER_TWEET_ENDPOINT).then().statusCode(200);
+                .queryParam("user_id",id)
+                .when().get(this.baseUrl + this.GET_FRIEND_LIST).then();
+
     }
 
-    // Create a Tweet from user twitter
+    public ValidatableResponse getFriendID(long id) {
+        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
+                .queryParam("user_id",id)
+                .when().get(this.baseUrl + this.GET_FRIENDS_ID).then();
+
+    }
+
     public ValidatableResponse createTweet(String tweet) {
         return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
                 .param("status", tweet)
@@ -53,7 +60,7 @@ public class TweetAPIClient extends RestAPI {
                 .then();
     }
 
-    // Delete a tweet from user twitter
+
     public ValidatableResponse deleteTweet(Long tweetId) {
         return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
                 .queryParam("id", tweetId)
@@ -61,7 +68,7 @@ public class TweetAPIClient extends RestAPI {
     }
 
 
-    // Response Time check
+
     public ValidatableResponse responseTime() {
         System.out.println(given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
                 .when().get(this.baseUrl + this.GET_USER_TWEET_ENDPOINT)
@@ -72,7 +79,7 @@ public class TweetAPIClient extends RestAPI {
 
     }
 
-    // Header Value
+
     public void headerValue() {
         System.out.println(given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
                 .when().get(this.baseUrl + this.GET_USER_TWEET_ENDPOINT)
@@ -157,19 +164,6 @@ public class TweetAPIClient extends RestAPI {
                 .when().get(this.baseUrl + this.GET_FOLLOWERS_ID).then().statusCode(200);
     }
 
-    public ValidatableResponse getFriendList(long id) {
-        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
-                .queryParam("user_id",id)
-                .when().get(this.baseUrl + this.GET_FRIEND_LIST).then();
-
-    }
-
-    public ValidatableResponse getFriendID(long id) {
-        return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
-                .queryParam("user_id",id)
-                .when().get(this.baseUrl + this.GET_FRIENDS_ID).then();
-
-    }
 
     public ValidatableResponse getFollowersList(long id) {
         return given().auth().oauth(this.apiKey, this.apiSecretKey, this.accessToken, this.accessTokenSecret)
