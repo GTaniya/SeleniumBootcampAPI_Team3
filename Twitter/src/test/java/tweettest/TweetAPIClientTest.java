@@ -12,6 +12,8 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.UUID;
 
+import static org.hamcrest.Matchers.*;
+
 public class TweetAPIClientTest {
 
     private TweetAPIClient tweetAPIClient;
@@ -26,11 +28,10 @@ public class TweetAPIClientTest {
     //Test #1
     @Test
     public void testGetFriendList(){
-        String expectedSetting = "Pritam";
+        String expectedSetting = "azadeh";
         ValidatableResponse response = this.tweetAPIClient.getFriendList(702779075094519808L);
+        response.assertThat().statusCode(200).body("users[1].name",hasToString(expectedSetting));
         System.out.println(response.extract().body().asPrettyString());
-        String actualSetting = response.extract().body().path("users[0].name");
-        Assert.assertEquals(actualSetting,expectedSetting,"Friend Not Found");
     }
 
     //Test #2
@@ -55,7 +56,7 @@ public class TweetAPIClientTest {
 
     //Test #4
     @Test
-    public void testUserCanNotDuplicateTweet() {
+    public void testDuplicateTweet() {
         String tweet = "wherever life plants you bloom with grace";
         ValidatableResponse response = this.tweetAPIClient.createTweet(tweet);
 
@@ -93,7 +94,7 @@ public class TweetAPIClientTest {
     }
 
     //Test #7
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testPropertyFromResponse() {
 
         String tweet = "Hello Tweeter" + UUID.randomUUID().toString();
